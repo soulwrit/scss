@@ -1,0 +1,24 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-crumb){
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $base-color;
+  font-variant: tabular-nums;
+  line-height: $base-line-height;
+  list-style: none;
+  font-feature-settings: "tnum";
+  font-size: 14px;
+
+  a {
+    cursor: pointer;
+  }
+
+  .sep {
+    margin: 0 5px;
+    font-weight: normal;
+    color: $muted-color;
+  }
+}

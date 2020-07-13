@@ -1,0 +1,22 @@
+@import "../config";
+@import "../function"; 
+
+@include when($classname-modal){
+    >.bd {
+        >.fx {
+            >.hdbar {  
+                padding-bottom: $base-space;;
+            }
+            >.bdbar {
+                max-height: 16 * $base-space;
+                padding: 0 $base-space;
+                margin: 0 -$base-space;
+            }
+            >.ftbar{
+                text-align: right;
+                padding-top: $base-space * 2.2;
+                padding-bottom: $base-space /4;;
+            }
+        }
+    } 
+}

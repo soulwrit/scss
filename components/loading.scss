@@ -1,0 +1,13 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-loading) {
+    position: relative;
+    >.cvs {
+        vertical-align: middle;
+    }
+    >.txt {
+        text-align: center;
+        line-height: 3;
+    }
+};

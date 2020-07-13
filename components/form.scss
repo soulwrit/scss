@@ -1,0 +1,36 @@
+@import "../config";
+@import "../function";
+// form scss
+@include when($classname-form){
+  user-select: none;
+  box-sizing: border-box;
+  >.lbl{
+    position: relative; 
+    width: 100%;
+    margin-bottom: $base-space;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline; 
+    padding:0 $base-space;
+    @include clearfix;
+    >.name,>.ctrl,>.extra { 
+      flex-shrink: 0;
+      @include float-left;
+    }
+    >.name {
+      position: relative;
+      padding-right:  $base-space;
+      vertical-align: middle;
+      >.required{
+        position: absolute;
+      }
+    }
+    >.ctrl{
+      flex-grow: 1; 
+      flex-basis: 0;
+      width: 0;
+      // overflow-x: auto; 
+    }
+  }
+}

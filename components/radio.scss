@@ -1,0 +1,66 @@
+@import "../config";
+@import "../function";
+$radio-size: 20px; 
+
+@include when($classname-radio) {
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  line-height: 1; 
+  cursor: default;
+  
+  &>.radio:checked + .state::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+ 
+  &>.radio{
+    display: none;
+    opacity: 1;
+    position: relative;
+    z-index: 2;
+  }
+  
+  &>.state {
+    position: relative; 
+    display: inline-block;
+    width: $radio-size;
+    height: $radio-size;
+    margin: 0;
+    padding: 0; 
+    background-color: $white;
+    cursor: pointer;
+    vertical-align: middle; 
+    outline: none;
+    border: 1px solid #dddddd;
+    box-sizing: border-box;
+    border-radius: 50%;
+    &.disabled {
+      border-color:#999;
+    }
+    &::after {
+      display: table;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: $radio-size / 2;
+      height: $radio-size / 2;
+      margin-top: -$radio-size / 4;
+      margin-left: -$radio-size / 4;
+      border: 0;
+      opacity: 0;
+      transform: scale(0);
+      transition: $base-fast-transition;
+      background-color: $theme-color;
+      content: " ";
+      border-radius: 50%;
+    } 
+  }
+
+  &>.value {
+    padding-left: $radio-size / 2;
+    padding-right: $radio-size / 2;
+    vertical-align: middle;
+  }
+}

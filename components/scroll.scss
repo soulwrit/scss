@@ -1,0 +1,66 @@
+@import "../config";
+@import "../function";
+
+$classname-scrollor: scr;
+$scrollor-def-wrap-oversize: -17px;
+$scrollor-def-track-bgcolor: transparent;
+$scrollor-def-track-size: 12px;
+$scrollor-def-bar-bgcolor: transparent;
+$scrollor-def-bar-focus-bgcolor: $gray-400;
+$scrollor-def-bar-offset: 2px;
+$scrollor-def-bar-min-size: $scrollor-def-track-size *2; 
+ 
+@include when($classname-scrollor){
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; 
+    &.stress{
+        &:hover>.track >.bar {
+            background-color: rgba($scrollor-def-bar-focus-bgcolor, 1);
+        }
+    }
+    &>.wrap { 
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        padding-bottom: abs($scrollor-def-wrap-oversize);
+        padding-right: abs($scrollor-def-wrap-oversize);
+        margin-right: $scrollor-def-wrap-oversize;
+        margin-bottom: $scrollor-def-wrap-oversize;
+        box-sizing: content-box;
+    }
+    &>.track {
+        position: absolute;
+        background-color: $scrollor-def-track-bgcolor;
+        transition: background-color 300ms ease-in-out;
+        &.x {
+            left: 0;
+            bottom: 0;
+            right: $scrollor-def-track-size;
+            height: $scrollor-def-track-size;
+            &>.bar {
+                top: $scrollor-def-bar-offset;
+                bottom: $scrollor-def-bar-offset;
+                min-width: $scrollor-def-bar-min-size;
+            }
+        }
+        &.y {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: $scrollor-def-track-size;
+            &>.bar {
+                left: $scrollor-def-bar-offset;
+                right: $scrollor-def-bar-offset;
+                min-height: $scrollor-def-bar-min-size;
+            }
+        }
+        &>.bar {
+            position: absolute;
+            background-color: $scrollor-def-bar-bgcolor;
+            transition: background-color 300ms ease-in-out;
+            cursor: pointer; 
+        }
+    }
+}

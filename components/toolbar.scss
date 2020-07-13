@@ -1,0 +1,56 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-toolbar) { 
+  font-weight: normal; 
+  line-height: inherit;
+  word-break: break-all;
+  
+  @each $key, $value in $colors {
+    &.#{$key}{
+      color: $value;
+      @if $key == light or $key == muted {
+        &:hover {
+          color: darken($value, $type-color-amount);
+        }
+      }@else {
+        &:hover {
+          color: lighten($value, $type-color-amount);
+        }
+      }
+    }
+  }
+}
+
+// @mixin hicoList {
+//   outline: 0;
+//   border: 0;
+//   display: inline-block;
+//   width: 1.25em;
+// }
+// @include when(hico-list){
+//   position: relative;
+//   overflow: hidden;
+//   vertical-align: middle;
+//   background-color: $theme-color;
+//   height: 1.25em;
+//   cursor: pointer;
+//   @include hicoList();
+
+//   &::before,&::after {
+//     content: '';
+//     position: absolute; 
+//     left: 0;
+//     @include hicoList(); 
+//     width: 1.25em;
+//     height: 0.25em;
+//     background-color: $white;
+//   }
+//   &::before { 
+//     top:  0.25em; 
+//   }
+//   &::after{
+//     top: 0.75em; 
+//   }
+  
+// }

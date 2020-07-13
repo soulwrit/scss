@@ -1,0 +1,25 @@
+@import "../config";
+@import "../function"; 
+
+$classname-action: act;
+@include when($classname-action){ 
+    position: relative;
+    top: -1px;
+    right: -$base-space/2;
+    padding: 0;
+    border: 0; 
+    line-height: 0;  
+    outline: none;
+    color: $muted-color;
+    cursor: pointer;
+    background: none;
+    font-weight: normal;
+    text-transform: none;
+    text-rendering: auto;
+    box-sizing: border-box;
+    vertical-align: middle;
+    &:hover{
+        transition: $base-fast-transition;
+        color: map-get($colors, danger);
+    }
+}

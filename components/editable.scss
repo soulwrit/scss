@@ -1,0 +1,41 @@
+@import "../config";
+@import "../function";
+@include when ($classname-editable){
+  position: relative;
+  max-width: 100%;
+  &>.i {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    vertical-align: middle;
+    resize: none; 
+    outline: 0;
+    font-weight: normal;
+    box-shadow: none;
+    box-sizing: border-box; 
+    background-color: transparent;
+    white-space: normal;
+    word-break: break-word;
+    @each $key, $value in $form-controls-colors {
+      &.#{$key} { 
+        border: 1px solid $value;
+        &:hover {
+          box-shadow: 1px 1px 6px $value;
+        }
+      }
+    }
+  }
+  &>.placeholder{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: inherit;
+    transition: none;    
+    box-sizing: border-box;
+  }
+}

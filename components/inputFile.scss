@@ -1,0 +1,10 @@
+@import "../config";
+@import "../function";
+
+// $action-width: 125px;
+@include when ($classname-upload){
+    position: relative;
+    font-size: inherit;
+    color: inherit;
+    line-height: initial;
+}

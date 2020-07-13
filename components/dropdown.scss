@@ -1,0 +1,38 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-dropdown){
+  z-index: map-get($z-index, dropdown);
+  position: absolute;
+  background-color: $white;
+  box-shadow: 0 5px 10px map-get($colors, muted); 
+  min-width: 8em;
+  >.i, >.grp>.i{
+    padding: $base-space / 2  $base-space;
+    cursor: pointer;
+    outline: none; 
+    white-space: nowrap;
+    word-break: break-all;
+    font-weight: normal;
+    line-height: initial;
+    box-sizing: border-box;
+    transition: $base-slow-transition;
+    & + & {
+      border-bottom: 1px solid transparent;
+    }
+    &.active {
+      background-color: $theme-color;
+      color: lighten($theme-color, 90);
+    }
+    &:hover {
+      color: $theme-color;
+    }
+    &>.wrapper {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+  >.grp, >.i>.grp {
+    border-top: $base-border;
+  }
+}

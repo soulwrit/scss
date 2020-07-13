@@ -1,0 +1,20 @@
+@import "../config";
+@import "../function";
+
+@include when ($classname-flex){
+    display: flex;
+    box-sizing: border-box;  
+    @include clearfix;
+    &>.i {
+        overflow: auto;
+        margin: 0; 
+        box-sizing: border-box; 
+        @include float-left;
+    }
+    &.ttr,&[dir='ttr'], &.rtt,&[dir='rtt'] {
+        height: 100%;
+    }
+    &.ltr,&[dir='ltr'], &.rtl,&[dir='rtl'] {
+        width: 100%;
+    }
+}

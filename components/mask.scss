@@ -1,0 +1,50 @@
+@import "../config";
+@import "../function";
+
+// 样式对应的DOM结构
+/*
+    <div class='msk'>
+        <div class='cls'>关闭<div>
+        ...自定义内容
+    </div>
+*/
+// mask 遮罩层 
+@include when($classname-mask){
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: map-get($z-index, modal) - 1;
+    background-color: rgba($black, 0.45); 
+  
+    @if $less-ie {
+        opacity: 0.45;
+        background-color: $black;
+    }
+    &:hover {
+        &>.cls{
+            opacity: 1;
+            display: unset;
+        }
+    }
+    &>.cls {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: $base-space/4;
+        font-size: 135%;
+        background-color: $gray-100;
+        color: initial;
+        cursor: pointer;
+        line-height: 1;
+        transition: $base-transition;
+        &:hover {
+            background-color: $gray-200;
+        }
+    }
+    &.fixed {
+        position: fixed;
+    }
+}

@@ -1,0 +1,95 @@
+@charset "UTF-8";
+@import "../config";
+@import "../function";
+
+// box scss
+// 支持固定宽度、百分比宽度、列偏移、列序（插队）
+// 列反向：可用helper中的 flex-row-reverse实现
+//         本质：flex-direction: row-reverse;
+//
+// flex-row可与box绑定使用，也可以单独使用
+// 所有的col只有在特定的row中使用，才能得到相应的效果
+//-----------------------------------------------------
+// 类名使用规则：(盒子选择性绑定栅格)
+//      box[居中盒子],box-full[全屏盒子]
+//         > row -----------------> 栅格行
+//           > col-[1~12] --------> 列宽度
+//             pull-[1-12] -------> 列后移
+//             push-[1-12] -------> 列前移
+//*****************************************************
+
+/*
+  栅格总列数
+  $columns:12 的优势
+  12是 1，2，3，4，6的最小公倍数，所以12列栅格系统相对较灵活，
+  支持将一行分成1列，2列，3列，4列，6列。
+  若是想要支持5列，那1，2，3，4，5的最小公倍数是60, 60这个数对于栅格系统来说显然太大了。
+  18不能均分4列,24能做的12都能做，所以12是最好的选择。
+*/ 
+$columns: 12;
+$gutter: 16px; // box的边距
+$box-fixed-width: ( // 固定的box 宽度
+    xs: 100%,
+    sm: nth($breakpoint-sm, 1) - $gutter,
+    md: nth($breakpoint-md, 1) - $gutter,
+    lg: nth($breakpoint-lg, 1) - $gutter,
+    xl: nth($breakpoint-xl, 1) - $gutter,
+    vl: nth($breakpoint-vl, 1) - $gutter,
+);
+
+/**
+ * 获取每一列的宽度  核心函数
+ * @param {number}  $column 0-12 列的编码
+ * @param {number}  $column-width 大于等于1的值，默认为 1
+ */
+@function get-column-width($num: 1, $column-width: 1) {
+    $res: ($num / $columns) * $column-width;
+  
+    @if $column-width == 1 {
+      $res: percentage($res); //转为百分比
+    }
+  
+    @return $res;
+}
+@include when($classname-box){
+    // 固定宽度的容器  
+    margin-left: auto;
+    margin-right: auto;
+    @each $bp in $breakpoint {
+        @include screen-resp($bp) {
+            width: map-get($box-fixed-width, $bp);
+        }
+    }
+    // 行样式
+    @at-root .#{$classname-row} {
+        display: flex;
+        flex-wrap: wrap; 
+        box-sizing: border-box;
+        width: 100%;
+        @include clearfix;   
+        
+        // 循环列
+        &>.#{$classname-col}{
+            padding: $gutter/2;
+            box-sizing: border-box;  
+            @include float-left;
+            // 列样式
+            @for $i from 1 through $columns {
+                $basic: get-column-width($i);
+                &-#{$i} {
+                    flex: 0 0 $basic;
+                    max-width: $basic; 
+                    width: $basic;
+                }
+                // 列后置
+                &.push-#{$i} {
+                    margin-left: $basic;
+                }
+                // 列前置
+                &.pull-#{$i} {
+                    margin-right: $basic;
+                }
+            } 
+        }
+    }
+}

@@ -1,0 +1,252 @@
+@import "../config";
+@import "../function"; 
+
+/* 配置 */ 
+$classname-tab-plus: 'tabp';
+$classname-tab-plus-rtl: and-class($classname-tab-plus, rtl); 
+$classname-tab-plus-ltr: and-class($classname-tab-plus, ltr); 
+$classname-tab-plus-ttr: and-class($classname-tab-plus, ttr); 
+$classname-tab-plus-rtt: and-class($classname-tab-plus, rtt);  
+
+$tab-plus-border: 1px solid $gray-200;
+$tab-plus-pane-bgcolor: $white; // 选项卡条的背景颜色
+$tab-plus-active-color: $theme-color; // 选项卡选中时的字体颜色
+$tab-plus-vr-padding: $base-space * 0.6;
+$tab-plus-hr-padding: $base-space * 1.2;
+$tab-plus-card-space: $base-space / 5;
+
+@mixin active-tab-card($border-position: bottom) {
+    &.active { 
+        background-color: $white;
+        border-#{$border-position}-color: $white;
+        z-index: 1;
+    }
+}
+
+@mixin tab-pane-line($position: bottom, $size: 1px) {
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: $gray-200;
+        @if $position == bottom {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: $size;
+        }@if $position == top {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: $size;
+        }@if $position == left {
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: $size;
+        }@if $position == right {
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: $size;
+        }
+    }
+}
+
+@include when ($classname-tab-plus){
+    display: flex;  
+    justify-content: space-between; 
+    box-sizing: border-box;
+
+    // 控制条
+    >.pane {  
+        overflow: hidden;
+        position: relative;
+        background-color: $tab-plus-pane-bgcolor;
+        box-sizing: border-box; 
+        display: flex;
+        justify-content:flex-start;
+        align-content: center;
+        flex-shrink: 0; 
+        >.wrapper {
+            flex-shrink: 0;
+            flex-basis: 0;
+            flex-grow: 1;
+            overflow: hidden;
+            >.action {
+                position: relative;    
+                white-space: nowrap;
+                max-width: 100%; 
+                @include clearfix; 
+                &.centered { 
+                    text-align: center;
+                }
+                >.i {
+                    position: relative;
+                    cursor: pointer;
+                    box-sizing: border-box;
+                    &.active { 
+                        color: $tab-plus-active-color;
+                    }
+                }
+            }
+        }
+        >.adder {
+            position: relative;
+            padding: $tab-plus-vr-padding $tab-plus-hr-padding/3;
+            margin: 0 $tab-plus-card-space; 
+            border: $tab-plus-border;
+            background-color: $gray-100;
+            text-align: center;
+            top: 1px;
+            cursor: pointer;
+            font-size: 2em;    
+            box-sizing: border-box;
+            >.act {
+                right: auto;
+            }
+        }
+        >.extra {
+            flex: none;
+            align-self: center;
+        }
+    }
+
+    // 内容
+    >.cnt {
+        position: relative;
+        flex-grow: 1;
+        flex-basis: 0;
+        overflow: hidden; 
+        // 内容块
+        >.i { 
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    }
+
+    // 垂直方向
+    &.ttr, &.rtt {
+        >.pane {
+            width: 100%; 
+            &.centered { 
+                >.ext {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+            >.wrapper >.action { 
+                >.i {
+                    padding: $tab-plus-vr-padding 0;
+                    margin-right: $base-space*2; 
+                    display: inline-block;
+                    &.card { 
+                        border: $tab-plus-border;
+                        margin-right: $tab-plus-card-space;
+                        padding: $tab-plus-vr-padding $tab-plus-hr-padding;
+                        background-color: $gray-100;
+                    }
+                }
+            }
+        }
+        >.cnt {
+            flex-shrink: 0;
+            width: 100%;
+            padding: $base-space 0;
+        }
+    }
+
+    // 水平方向
+    &.ltr, &.rtl {
+        >.pane {
+            min-width: 3em;  
+            height: 100%;
+            flex-direction: column;
+            >.wrapper >.action { 
+                >.i {
+                    white-space: nowrap;
+                    text-overflow: ellipsis; 
+                    max-width: 100%;
+                    padding: $tab-plus-vr-padding $tab-plus-hr-padding;
+                    &.card {
+                        border: $tab-plus-border;  
+                        background-color: $gray-100;
+                        margin-bottom: $tab-plus-card-space;
+                    }
+                }
+            }
+            >.extra {
+                margin-top: $base-space;
+                padding: 0 $tab-plus-vr-padding $tab-plus-hr-padding;
+            }
+        }
+        >.cnt {
+            flex-shrink: 1;
+            >.i {
+                padding: $tab-plus-vr-padding $tab-plus-hr-padding;
+            }
+        }
+    }
+}
+
+// 垂直正向
+@include when ($classname-tab-plus-ttr) {
+    // 卡片式页签
+    >.pane {
+        @include tab-pane-line;
+        >.wrapper >.action { 
+            >.i{ 
+                &.card {
+                    top: 1px;
+                    @include active-tab-card(bottom);
+                }
+            }
+        }
+    }
+}
+
+// 垂直反向
+@include when ($classname-tab-plus-rtt) {
+    >.pane {
+        @include tab-pane-line(top);
+        >.wrapper >.action { 
+            >.i{ 
+                &.card {
+                    top: -1px;
+                    @include active-tab-card(top);
+                }
+            }
+        }
+    } 
+}
+
+// 水平正向
+@include when ($classname-tab-plus-ltr) { 
+    >.pane {
+        @include tab-pane-line(right, 2px);
+        >.wrapper >.action { 
+            >.i{ 
+                &.card { 
+                    left: 1px; 
+                    @include active-tab-card(right);
+                }
+            }
+        }
+    } 
+}
+
+// 水平反向
+@include when ($classname-tab-plus-rtl){
+    >.pane {
+        @include tab-pane-line(left, 2px);
+        >.wrapper >.action { 
+            >.i{ 
+                &.card {
+                    left: -1px;
+                    @include active-tab-card(left);
+                }
+            }
+        } 
+    }
+} 

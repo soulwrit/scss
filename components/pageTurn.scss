@@ -1,0 +1,40 @@
+@import "../config";
+@import "../function";
+
+$classname-pageTurn: pagt;
+
+@include when($classname-pageTurn){
+  display: inline-block;
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+
+  >.i {
+    display: inline-block; 
+    cursor: pointer;
+    outline: 0;
+    background-color: $gray-100;
+    padding: 0 $base-space/6; 
+    list-style: none; 
+    text-align: center;
+    user-select: none; 
+    font-weight: bold;
+    line-height: 1;
+    &:hover {
+      transition: $base-fast-transition;
+      color: $theme-color;
+    }
+    &.disabled { 
+      pointer-events: none;
+      opacity: 0.8; 
+      cursor: not-allowed;
+    }
+  }
+  >.txt {
+    margin: 0 $base-space/4;
+    list-style: none;
+    line-height: $base-line-height; 
+    font-variant: tabular-nums; 
+    font-feature-settings: "tnum";
+  }
+}

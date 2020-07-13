@@ -1,0 +1,73 @@
+@import "../config";
+@import "../function";
+$classname-drawer: dar;
+$placement:(
+  top: (
+    top: -100%,
+    left: 0,
+    min-height: 8em,
+    max-height: 16em,
+    width: 100%,
+    height: auto,
+    // transform: translateY(-100%),
+    // enter: translateY(0)
+  ),
+  right: (
+    right:-100%,
+    top: 0,
+    min-width: 8em,
+    max-width: 16em,
+    height: 100%,
+    // transform: translateX(100%),
+    // enter: translateX(0)
+  ),
+  bottom: (
+    bottom:-100%,
+    left:0,
+    min-height: 8em,
+    max-height: 16em,
+    width: 100%,
+    height: auto,
+    // transform: translateY(100%),
+    // enter: translateY(0)
+  ),
+  left: (
+    left: -100%,
+    top: 0,
+    min-width: 8em,
+    max-width: 16em,
+    height: 100%, 
+    // transform: translateXY(-100%),
+    // enter: translateX(0)
+  ),
+);
+@include when($classname-drawer){
+  position: fixed;
+  z-index: 1000;
+  background-color: $white;
+
+  @each $key, $list in $placement {
+    &.#{$key} {
+      transition: #{$key} .8s ease-in-out 0s;
+      &.enter {
+        #{$key}: 0;
+      }
+      @each $prop, $value in $list {
+        @if $prop == enter {
+        }@else {
+          #{$prop}: #{$value};
+        }
+      }
+    }
+  } 
+
+  >.hd {
+    width: 100%;
+  }
+  >.bd {
+    flex: 1;
+  }
+  >.ft {
+    width: 100%;
+  }
+}

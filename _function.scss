@@ -1,0 +1,625 @@
+/*
+ 屏幕响应式 Responsive breakpoints
+ ————————————————————————————————————————————————————————————————
+*/
+@mixin screen-resp($breakpoint: xs) {
+  @if ($breakpoint == xs) {
+    @media screen and (max-width: $breakpoint-xs){
+      @content;
+    }
+  }@else if($breakpoint == sm) {
+    @media screen and (min-width: nth($breakpoint-sm, 1)) and (max-width: nth($breakpoint-sm, 2)){
+      @content;
+    }
+  }@else if($breakpoint == md) {
+    @media screen and (min-width: nth($breakpoint-md, 1)) and (max-width: nth($breakpoint-md, 2)){
+      @content;
+    }
+  }@else if($breakpoint == lg) {
+    @media screen and (min-width: nth($breakpoint-lg, 1)) and (max-width: nth($breakpoint-lg, 2)){
+      @content;
+    }
+  }@else if($breakpoint == xl) {
+    @media screen and (min-width: nth($breakpoint-xl, 1)) and (max-width: nth($breakpoint-xl, 2)){
+      @content;
+    }
+  }@else {
+    @media screen and (min-width: $breakpoint-vl) {
+      @content;
+    }
+  }
+}
+@mixin screen-width($min, $max){
+  @media screen and (min-width: $min) and (max-width: $max){
+      @content;
+  }
+}
+@mixin screen-max-width($max){
+  @media screen and (max-width: $max){
+      @content;
+  }
+}
+@mixin screen-min-width($min){
+  @media screen and (min-width: $min) {
+      @content;
+  }
+}
+@mixin screen-height($min, $max){
+  @media screen and (min-height: $min) and (max-height: $max){
+      @content;
+  }
+}
+@mixin screen-max-height($max){
+  @media screen and (max-height: $max){
+      @content;
+  }
+}
+@mixin screen-min-height($min){
+  @media screen and (min-height: $min){
+      @content;
+  }
+}
+// ————————————————————————————————————————————————————————————————
+
+/*
+  定义一个css功能， 参数为类名
+ */
+@mixin when($name) {
+    .#{$name} {
+        @content;
+    }
+}
+
+/*
+ 定义一个指定域的css功能块
+ */
+@mixin scope($scope, $name) {
+  .#{$scope-$name} {
+    @content;
+  }
+} 
+
+/*
+  条件输出
+*/
+@mixin where ($expr) {
+  @if $expr {
+    @content;
+  }
+}
+
+/*
+  三目运算符
+*/
+@function what($expr: true, $truly, $falsy){
+  @if $expr {
+    @return $truly;
+  }
+
+  @return $falsy;
+}
+/*
+  声明一个并列的类选择器
+*/
+@function and-class($base, $expr){
+  @return unquote('#{$base}.#{$expr}');
+}
+/*
+  定义获取map值的方法
+*/
+@function mapGet($key, $map:'') {
+  @if $map !='' {
+    @if not map-has-key($map, $key) {
+      @warn "属性 `#{$key}` 在 `$map` 没找到。";
+    }
+    @return map-get($map, $key);
+  } @else {
+    @return $key;
+  }
+}
+
+/*
+  map遍历器
+*/
+@mixin mapEach($map, $prefix: btn, $props: background-color) {
+    @if type-of($map) != "map" {
+        @error 'mapEach函数必须传入一个有效sass的map作为参数.';
+    } @else {
+        $list: ();
+        @if type-of($props) != "list" {
+            $list: append($list, $props);
+        } @else {
+            $list: join($list, $props);
+        }
+  
+        @each $key, $value in $map {
+            &.#{$prefix}-#{$key} {
+                @each $prop in $list {
+                    $type: type-of($prop);
+                    @if $type == "string" {
+                        #{$prop}: $value;
+                    } @else if $type == "map" {
+                        @each $key, $val in $prop {
+                            #{$key}: $val;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 基于记住大小计算一个转换之后的大小
+@function sizeTransform($r: 1, $size: $base-font-size) {
+    @if (type-of($r) != "number") {
+      @return $size;
+    }
+  
+    @return $size * $r;
+}
+
+// rem 与 px 转换
+@function px2rem($px, $u: $base-font-size) {
+    @return ($px / $u * 1rem);
+}
+
+// 同时生成 px 与 rem 单位
+@mixin px3rem($prop, $px) {
+    #{$prop}: $px * 1px;
+    #{$prop}: px2rem($px);
+}
+
+/**
+ * 获取颜色map方法
+ * @parm $k 颜色的key值
+ */
+@function color($k) {
+    @if not map-has-key($colors, $k) {
+      @warn "属性 `#{$k}` 在 `$colors` 没找到。";
+    }
+    @return map-get($colors, $k);
+}
+
+/**
+ * 获取字体map方法
+ * @parm $k 字体的key值
+ */ 
+@function font($k) {
+    @if not map-has-key($font-size, $k) {
+      @warn "属性 `#{$k}` 在 `$font-size` 没找到。";
+    }
+    @return map-get($font-size, $k);
+}
+  
+  
+/**
+ * 获取层级map方法
+ * @parm $k 颜色的key值
+ */
+@function zIndex($k) {
+    @if not map-has-key($z-index, $k) {
+      @warn "属性 `#{$k}` 在 `$zIndex` 没找到。";
+    }
+    @return map-get($z-index, $k);
+}
+  
+/**
+ * 获取圆角map方法
+ * @parm $k 圆角的key值
+ */
+@function radius($k) {
+    @if not map-has-key($radius, $k) {
+      @warn "属性 `#{$k}` 在 `$radius` 没找到。";
+    }
+    @return map-get($radius, $k);
+}
+
+//hover 生成对应的伪类
+@mixin hover{  
+    &:hover,&.hover{
+      @content;
+    }
+}
+
+// 设置超链接的行为，参数：
+// 1. normal
+// 2. hover
+// 3. active
+// 4. visited
+// 5. focus
+// 用例 link-color(#00c, #0cc, #c0c, #ccc, #cc0)
+@mixin super-link($normal:$link-color, $hover: $link-color-hover, $active: false, $visited: false, $focus: false) {
+    color: $normal; 
+    outline: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: $base-transition;
+    @if $hover {
+        &:hover {
+          color: $hover;
+          text-decoration: underline;
+        } 
+    }
+    @if $active {
+        &:active {
+          color: $active; 
+        } 
+    } 
+    @if $visited {
+        &:visited {
+            color: $visited; 
+        }
+    }
+    @if $focus {
+        &:focus {
+            color: $focus; 
+        } 
+    } 
+}
+
+// mixin scss
+// 包括常用的mixin，% @function
+// mixin，通过@include调用，样式通过拷贝的方式使用，尤其适用于传递参数
+// %，通过@extend调用，样式通过组合申明的方式使用，适用于不传参数的代码片段  
+// @function，返回一个值，用于调用
+//-----------------------------------------------------
+//
+// -debug 用来测试 map、list等
+// --------------------------
+@mixin debugs($css-style){
+  debug : inspect($css-style);
+}
+@mixin debugs-map-length($map){
+  @if (type-of($map) == 'map'){
+    $map-size: inspect(length(map-keys($map)));
+    map-size: $map-size;
+    @debug('Map Length:',$map-size);
+  }
+}
+// 闭合子元素的浮动
+// Direction independent float mixin that fixes the
+// [double-margin bug in IE5/6](http://www.positioniseverything.net/explorer/doubled-margin.html)
+@mixin float($side: left) {
+  @if $less-ie == true {
+    display: inline;
+  }
+  float: unquote($side); 
+}
+
+// Implementation of float:left with fix for the
+// [double-margin bug in IE5/6](http://www.positioniseverything.net/explorer/doubled-margin.html)
+@mixin float-left {
+  @include float(left); 
+}
+
+// Implementation of float:right with fix for the
+// [double-margin bug in IE5/6](http://www.positioniseverything.net/explorer/doubled-margin.html)
+@mixin float-right {
+  @include float(right);
+}
+
+// Resets floated elements back to their default of `float: none` and defaults
+// to `display: block` unless you pass `inline` as an argument
+//
+// Usage Example:
+//
+//     body.homepage
+//       #footer li
+//         +float-left
+//     body.signup
+//       #footer li
+//         +reset-float
+@mixin float-reset($display: block) {
+  float: none;
+  @if $less-ie == true {
+    display: $display; 
+  }
+}
+
+// 清除浮动 
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  zoom:1;
+}
+%clearfix{
+  @include clearfix;
+}
+
+// 既隐藏于视觉也隐藏于屏幕浏览器
+@mixin hidden {
+  display: none !important;
+  visibility: hidden;
+}
+%hidden{
+  @include hidden;
+}
+
+// 只隐藏于视觉，屏幕浏览器可以阅读
+@mixin visually-hidden {
+  position: absolute;
+  clip:rect(1px, 1px, 1px, 1px);
+}
+%visually-hidden{
+  @include visually-hidden;
+}
+
+/**
+ * 省略号设置方法
+ * 元素可以设置宽度才可应用省略号
+ */
+@mixin ellipsis($no-wrap: true, $width: 100%, $ellipsis: true, $lineClamp:2) {
+  @if $no-wrap {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lineClamp;
+		word-wrap: break-word;
+		word-break: break-all;
+		// eslint-disable-next-line
+		/*! autoprefixer: off */
+		/* autoprefixer: on */
+		-webkit-box-orient: vertical;
+  }
+  @if $ellipsis {
+		text-overflow: ellipsis;
+  }
+  overflow: hidden;  
+  max-width: $width;
+}
+
+// 禁用样式，加!important
+@mixin disabled($bg-color:$gray-100, $text-color:$base-color, $border-color: $gray-400){
+  overflow: hidden; 
+  background-color: $bg-color !important;
+  color: $text-color !important;
+  border-color: $border-color!important;
+  cursor: not-allowed !important;
+  pointer-events: auto;
+  opacity: 0.4;
+  box-shadow: none;
+}
+%disabled{
+  @include disabled;
+}
+
+// 垂直水平居中的内容
+@mixin flex-column-center{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: unset;
+}
+%flex-column-center{
+  @include flex-column-center;
+}
+
+// 列表无样式
+@mixin list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+%list-unstyled{
+  @include list-unstyled;
+}
+
+// 标准过渡
+@mixin transition($css-property:opacity, $speed: .3s, $method: ease, $props...){
+  transition: $css-property $speed $method $props;
+}
+@mixin fast-transition($css-property:opacity, $speed: .2s, $method: ease,$props...){
+  transition: $css-property $speed $method $props;
+}
+@mixin slow-transition($css-property:opacity, $speed: .4s, $method: ease, $props...){
+  transition: $css-property $speed $method $props;
+}
+
+// 标准遮罩层
+// 其z-index从其父级继承
+@mixin full-screen-mask($edit-style){
+  // 可覆盖
+  $cover-style:(
+    display:none,
+    overflow: hidden,
+    position: absolute,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    outline: 0
+  );
+
+  //- debug
+  // @include debugs(type-of($edit-style));
+  // @include debugs($style-edit);
+  @if (type-of($edit-style) == 'map') {
+    $cover-style: map-merge($cover-style, $edit-style);
+  }
+
+  @each $prop-name,$prop-value in $cover-style {
+    #{$prop-name}: inspect($prop-value);
+  }
+
+  // 不会被修改的样式
+  z-index: inherit;
+  -webkit-overflow-scrolling: touch;
+}
+
+// 默认滚动条
+@mixin scrollor($dir){
+  $scrollor-map: '';
+  @if $dir == 'y' {
+    overflow-x: hidden!important;
+    overflow-y: auto;
+    $scrollor-map: $scrollor-y;
+  }@else if ($dir == 'x'){
+    overflow-x: auto;
+    overflow-y: hidden!important;
+    $scrollor-map: $scrollor-x;
+  }@else {
+    overflow: auto;
+  }
+
+  //- debug
+  // @include debugs(type-of($default-scrollor-y));
+  // @include debugs($default-scrollor-y);
+  @if(type-of($scrollor-map) == 'map'){
+    $scrollor-map: map-merge($scrollor-map, $scrollor-base);
+    @each $class-name,$css-prop in $scrollor-map{
+      //- debug
+      // @include debugs($css-prop);
+      // @include debugs('&::-webkit-#{$class-name}');
+      // @include debugs(type-of(()));
+      // @include debugs-map-length($css-prop);
+      @if (type-of($css-prop) == 'map'){
+        &::-webkit-#{$class-name}{
+          @each $prop-name,$prop-value in $css-prop{
+            #{$prop-name}: inspect($prop-value);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin scrollor-y{
+  @include scrollor('y');
+}
+%scrollor-y{
+  @include scrollor-y;
+}
+@mixin scrollor-x{
+  @include scrollor('x');
+}
+%scrollor-x{
+  @include scrollor-x;
+}
+
+//自定义线性渐变
+@mixin linear-gradient($angle, $details...){
+  //ie6789
+  @if $less-ie == true {
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='transparent', endColorStr='#F3F3F7', gradientType='0');
+  }
+  //ie10以上
+  background-image:linear-gradient($angle, $details);
+}
+
+// Opacity
+// lte8使用filter兼容
+@mixin opacity($opacity:50,$important:false) {
+  @if $important {
+    @if $less-ie == true {
+      -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=$opacity)"!important;
+      filter: alpha(opacity=$opacity)!important;
+    }
+    opacity: $opacity / 100 !important;
+  }@else {
+    @if $less-ie == true {
+      -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=$opacity)";
+      filter: alpha(opacity=$opacity);
+    }
+    opacity: $opacity / 100;
+  }
+}
+
+//设置三角形图标
+@mixin triangle($direction:top, $size:7px, $border-style: solid, $border-color: $base-color) {
+  @if $direction == top {
+    border-bottom:$size $border-style $border-color;
+    border-left:$size $border-style transparent;
+    border-right:$size $border-style transparent;
+  } @else if $direction == right {
+    border-left:$size $border-style $border-color;
+    border-top:$size $border-style transparent;
+    border-bottom:$size $border-style transparent;
+  } @else if $direction == bottom {
+    border-top:$size $border-style $border-color;
+    border-left:$size $border-style transparent;
+    border-right:$size $border-style transparent;
+  } @else if $direction == left {
+    border-right:$size $border-style $border-color;
+    border-top:$size $border-style transparent;
+    border-bottom:$size $border-style transparent;
+  } @else {
+    border:$size $border-style $border-color;
+  }
+}
+
+/**
+ * 解决IE9以下不支持rgba，下面是rgba的替代
+ * @param $color
+ * @param $opacity
+ */
+@mixin rgba($color,$opacity){
+  background-color: rgba($color,$opacity);
+  @if $less-ie == true {
+    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#cc000000, endcolorstr=#cc000000);
+  }
+}
+
+// WebKit-style focus
+@mixin tab-focus() {
+  // WebKit-specific. Other browsers will keep their default outline style.
+  // (Initially tried to also force default via `outline: initial`,
+  // but that seems to erroneously remove the outline in Firefox altogether.)
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+// nth-chilid生成伪类和对应类名
+// 解决ie8不支持伪类的问题伪类将被解析是错误，故不能讲其写在一行 
+@mixin nth-child($n) {
+  #{"&:nth-child(#{$n})"} {
+    @content;
+  }
+  @if $less-ie == true {
+    #{"&.nth-#{$n}"} {
+        @content;
+    }
+  }
+}
+
+// 第一个子元素
+@mixin first-child {
+  #{"&:first-child"} {
+      @content;
+  }
+  @if $less-ie == true {
+    #{"&.first-child,&.first"} {
+      @content;
+    }
+  }
+}
+
+// 最后一个子元素的兼容
+@mixin last-child {
+  #{"&:last-child"} {
+      @content;
+  }
+  @if $less-ie == true {
+    #{"&.last-child,&.last"} {
+      @content;
+    }
+  }
+} 
+
+// 行内元素换行
+@mixin start-wrap {
+  &:before {
+      content: '\D\A';
+      white-space: pre;
+  }
+}
+@mixin end-wrap{
+  &:after {
+      content: '\A';
+      white-space: pre;
+  }
+}

@@ -1,0 +1,29 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-divider){
+  display: inline-block;
+  position: relative; 
+  padding: 0;
+  width: auto;
+  top: -0.05em;
+  height: 1.2em;
+  margin: 0 .5em;
+  border: 0 solid $gray-500;
+  border-left-width: 1px;
+  vertical-align: middle;
+  background: none;
+  list-style: none;
+  box-sizing: border-box; 
+
+  &>.text {
+    display: inline-block;
+    padding: 0 10px; 
+    font-size: inherit; 
+    line-height: 1;
+    vertical-align: super;
+    white-space: nowrap;
+    font-weight: 500; 
+    color: inherit; 
+  } 
+}

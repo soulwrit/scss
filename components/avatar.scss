@@ -1,0 +1,29 @@
+@import "../config";
+@import "../function";
+
+@include when ($classname-avatar){
+    position: relative; 
+    display: inline-block;
+    margin: auto;
+    border: $base-border;
+    border-radius: 50%;
+    box-shadow: inset 0 0 3px lighten($theme-color, 80);
+    transition: transform 300ms ease-in-out; 
+    cursor: pointer;
+    vertical-align: middle;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: content-box;
+    &:hover {
+      transform: scale(1.1);
+      border-color: transparent;
+    }
+
+    @each $key, $value in $avatar-size {
+      &-#{$key} {
+        width: nth($value, 1);
+        height: nth($value, 2); 
+      }
+    }
+}

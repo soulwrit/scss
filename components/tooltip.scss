@@ -1,0 +1,173 @@
+@charset "UTF-8";
+@import "../config";
+@import "../function";
+
+$arrow-size: 8px;
+$arrow-opts: (
+  topLeft:(
+    type: bottom,
+    position: (
+      left: 0,
+      top: 100%
+    )
+  ),
+  top:(
+    type: bottom,
+    position: (
+      left: 50%,
+      top: 100%,
+      margin-left: -$arrow-size
+    )
+  ),
+  topRight:(
+    type: bottom,
+    position: (
+      right: $arrow-size*2,
+      top: 100%
+    )
+  ),
+
+  rightTop:(
+    type: left,
+    position: (
+      left: -$arrow-size,
+      top: 0
+    )
+  ),
+  right:(
+    type: left,
+    position: (
+      left: -$arrow-size,
+      top: 50%,
+      margin-top: -$arrow-size
+    )
+  ),
+  rightBottom:(
+    type: left,
+    position: (
+      left: -$arrow-size,
+      bottom: $arrow-size*2
+    )
+  ),
+
+  bottomLeft:(
+    type: top,
+    position: (
+      left: 0,
+      top: -$arrow-size 
+    )
+  ),
+  bottom: (
+    type: top,
+    position: (
+      left: 50%,
+      top: -$arrow-size,
+      margin-left: -$arrow-size
+    )
+  ),
+  bottomRight: (
+    type: top,
+    position: (
+      right: $arrow-size*2,
+      top: -$arrow-size 
+    )
+  ),
+  
+  leftTop:(
+    type: right,
+    position: (
+      right: 0,
+      top: 0, 
+    )
+  ),
+  left:(
+    type: right,
+    position: (
+      left: 100%,
+      top: 50%,
+      margin-top: -$arrow-size
+    )
+  ),
+  leftBottom:(
+    type: right,
+    position: (
+      right: 0,
+      bottom: $arrow-size*2
+    )
+  )
+);
+
+// 页面提示站位样式
+@include when($classname-tooltip){ 
+  z-index: map-get($z-index, tooltip);
+  position: absolute; 
+  text-align: justify;
+  line-height: inherit;
+  background-color: $white;
+  box-sizing: border-box;
+  &>.inner {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  &>.arrow {
+    display: block;
+    position: absolute; 
+    &::before{
+      overflow:hidden;
+      position: absolute;
+      content:"";
+      height: 0;
+      width: 0;
+    }
+  }
+  @each $placement, $property in $arrow-opts {
+    $type: map-get($property, type);
+    $position: map-get($property, position);
+  
+    &.#{$placement}>.arrow{
+      @each $prop-name, $prop-value in $position {
+        #{$prop-name}: $prop-value;
+      }
+      &::before{
+        @include triangle($type, $arrow-size); 
+      }
+    }
+  }
+  @each $key, $value in $tooltip-colors {
+    &.#{$key} { 
+      $shadow-color: lighten($value, 45);
+      $arrow-border-color: $value;
+      @if $key == light {
+        color: inherit;
+        $shadow-color: darken($value, 15);
+        $arrow-border-color: darken($value, 3);
+      }@else {
+        color: $white;
+      }
+      background-color: $value;
+      border-color: $value;
+      box-shadow: 0 0 6px $shadow-color;
+      @each $placement, $property in $arrow-opts {
+        $type: map-get($property, type);
+        @if $type == top {
+            $type: bottom;
+        }@else if $type == bottom {
+            $type: top;
+        }@else if $type == left {
+            $type: right;
+        }@else if $type == right {
+            $type: left;
+        }
+        
+        &.#{$placement}>.arrow{
+          &::before{
+            border-#{$type}-color: $arrow-border-color;
+          }
+        }
+      }
+    }
+  }
+} 

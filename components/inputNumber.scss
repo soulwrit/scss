@@ -1,0 +1,65 @@
+@import "../config";
+@import "../function";
+
+$classname-inputNumber: iptn;
+$inputNumber-border-color: $gray-400;
+$inputNumber-action-min-width: 2em;
+$inputNumber-enter-width: 8em;
+
+@include when($classname-inputNumber){
+  position: relative;
+  max-width: 100%;
+  border: 1px solid $inputNumber-border-color;
+  outline: none;  
+  box-shadow: none;
+  font-weight: normal;
+  user-select: none; 
+  box-sizing: border-box;
+  @include transition(border-color);
+  @include clearfix;
+  &.vertical {
+    width: $inputNumber-enter-width;
+    &>.enter {
+        width: 100%; 
+    }
+    &>.decrease{
+        width: 100%;
+        border: 0;      
+        border-bottom: 1px solid $inputNumber-border-color;
+    }
+    &>.increase{
+        width: 100%;
+        border: 0;      
+        border-top: 1px solid $inputNumber-border-color;
+    }
+  }
+  &>.decrease, &>.increase {
+    min-width: $inputNumber-action-min-width;
+    text-align: center;
+    background-color: $gray-200; 
+    cursor: pointer;
+    box-sizing: border-box;
+    @include float-left;
+  }
+  &>.decrease {
+    border-right: 1px solid $inputNumber-border-color;
+  }
+  &>.increase {
+    border-left: 1px solid $inputNumber-border-color;
+  }
+  &>.enter {
+      display: block; 
+      width: $inputNumber-enter-width;
+      @include float-left;
+  }
+  input  {
+      overflow: hidden;
+      border: none;
+      outline: none;
+      resize: none;
+      vertical-align: middle;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+  } 
+}

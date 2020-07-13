@@ -1,0 +1,55 @@
+@import "../config";
+@import "../function";
+@include when ($classname-elegantEditor){
+  display: flex;
+  flex-direction: column;
+  outline: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-weight: normal;
+  text-align: left;  
+  box-sizing: border-box; 
+  margin: $base-space 0;
+  @each $key, $value in $form-controls-colors {
+    &.#{$key} { 
+      border: 1px solid $value;
+      &:hover {
+        box-shadow: 1px 1px 6px $value;
+      }
+    }
+  }
+  >.hd {
+    * {
+      box-sizing: border-box;
+      text-align: left;
+    }
+    $icon-space: $base-space/2;
+    border-bottom: $base-border;
+    margin-top: -$icon-space;
+    @include clearfix;
+    &>.i{
+      position: relative;
+      float: left;
+      margin-top: $icon-space;
+      >i {
+        cursor: pointer;
+        margin-right: $icon-space;
+        color: $muted-color;
+        font-size: 150%;
+        &:hover{
+          color: $gray-800;
+        }
+      }
+    }
+  }
+  >.bd {
+    flex: 1; 
+    overflow: auto;
+    &.#{$classname-editable}>.i{
+      box-shadow: none; 
+    }
+  }
+  >.ft {
+    text-align: left;
+  }
+}

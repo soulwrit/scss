@@ -1,0 +1,36 @@
+@import "../config";
+@import "../function";
+
+//
+// 缩略图类样式
+//
+//* 面板要求在所处的环境中突显出来，此处只是建立面板的概念
+
+// 类名说明
+//     cover ---------------------> 容器
+//**   与 size、theme 搭配使用，就可以获得想要的效果
+ 
+@include when ($classname-cover){
+  display: block; 
+  position: relative; 
+  line-height: initial;  
+  box-sizing: border-box;
+
+  &>img {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+  } 
+
+  &.ratio {
+    width: 100%;
+    height: 0;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-color: $white; 
+  }
+}

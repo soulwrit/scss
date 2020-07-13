@@ -1,0 +1,48 @@
+@import "../config";
+@import "../function";
+
+// 标签
+@include when($classname-tag) {
+  overflow: hidden;
+  line-height: 1; 
+  white-space: nowrap;
+  text-overflow: ellipsis; 
+  vertical-align: middle;
+  font-weight: normal;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  outline: none; 
+  &.x1 {
+    padding: $base-space/8 $base-space/6;
+    font-size: 50%;
+  }
+  &.x2 {
+    padding: $base-space/6 $base-space/4;
+    font-size: 50%;
+  }
+  &.inb {
+    margin-right: $base-space;
+    margin-bottom: $base-space;
+  }
+  @each $key, $value in $colors { 
+    &.#{$key} {
+      @if $key == light or $key == muted {
+          background-color: $gray-100;
+      }@else {
+          color: $white;
+          background-color: $value;
+      }
+    }
+    
+    $invert-color: invert($value);
+    &.#{$key}.invert {
+      color: invert($invert-color);  
+      background-color: $invert-color;
+    }
+  }
+
+  &>big{
+    margin-left: $base-space/2;
+    cursor: pointer;
+  }
+} 

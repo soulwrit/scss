@@ -1,0 +1,213 @@
+@import "../config";
+@import "../function";
+@import "./mask.scss";
+
+
+// 样式对应的DOM结构
+/* 
+    <div class ='msk'></div>
+    <div class ='mdl'>
+        <div class='hd'>
+            <h2>标题</h2>
+            <span>关闭</span>
+        </div>
+        <div class='bd'>主体</div>                 
+        <div class='ft'>
+            <button>确定</button>
+        </div>
+    </div> 
+*/
+$modal-bgcolor: $white ;    
+$modal-padding: .5em; 
+$modal-close-size: 2em; 
+$modal-placements: (
+    top-start: (
+        open: ( 
+            left: 0,
+        ),
+        close: (
+            top: 0,
+            left: -100%,
+            transition: left .8s ease-in-out
+        )
+    ),
+    top: (
+        open: (
+            top: 0,
+        ),
+        close: (
+            top: -100%,
+            left: 50%,
+            transform: translateX(-50%), 
+            transition: top .8s ease-in-out
+        )
+    ),
+    top-end: ( 
+        open: ( 
+            right: 0,
+        ),
+        close: (
+            top: 0,
+            right: -100%,
+            transition: right .8s ease-in-out
+        )
+    ),
+    right: (
+        open: (
+            right: 0,
+        ),
+        close: (
+            right: -100%,
+            top: 50%,
+            transform: translateY(-50%),
+            transition: right .8s ease-in-out
+        ), 
+    ),
+    bottom-start: ( 
+        open: (
+            left: 0,
+        ),
+        close: (
+            bottom: 0,
+            left: -100%,
+            transition: left .8s ease-in-out
+        )
+    ),
+    bottom: ( 
+        open: (
+            bottom: 0,
+        ),
+        close: (
+            bottom: -100%,
+            left: 50%,
+            transform: translateX(-50%),
+            transition: bottom .8s ease-in-out
+        )
+    ),
+    bottom-end: (
+        open: ( 
+            right: 0,
+        ),
+        close: (
+            bottom: 0,
+            right: -100%,
+            transition: right .8s ease-in-out
+        )
+    ),
+    left: (
+        open: (
+            left: 0
+        ),
+        close: (
+            left: -100%,
+            top: 50%,    
+            transform: translateY(-50%),
+            transition: left .8s ease-in-out
+        ),
+    ),
+    middle: (
+        open: (
+            top: 50%,
+        ),
+        close: (
+            top: 0%, 
+            left: 50%, 
+            transform: translate(-50%, -50%),
+            transition: top 0.2s ease-in-out
+        ),
+    ),
+    fade: (
+        open: (
+            opacity: 1,
+        ),
+        close: (
+            top: 50%, 
+            left: 50%, 
+            opacity: 0,
+            transform: translate(-50%, -50%),
+            transition: opacity 0.2s ease-in-out
+        ),
+    ),
+);
+
+@include when($classname-modal){
+    overflow: hidden;
+    position: fixed;
+    z-index: map-get($z-index, 'modal');
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    background-color: $modal-bgcolor;
+    color: initial;
+    text-align: left;
+    box-sizing: border-box; 
+    box-shadow: 0 -1px 7px $muted-color; 
+
+    @each $key, $map in $modal-placements {
+        &.#{$key} {
+            $close: map-get($map, close);
+            @each $prop, $value in $close {
+                #{$prop}: $value;
+            }
+            $open: map-get($map, open);
+            &.open {
+                @each $prop, $value in $open {
+                    #{$prop}: $value;
+                }
+            }
+        }
+    }
+
+    >.hd, >.ft {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    >.hd {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $gray-100;
+        >.cls {
+            position: relative;
+            top: -2px;
+            right: -4px;
+            text-align: right;
+            padding: 0;
+            border: 0;
+            font-size: 2em;
+            line-height: 0;  
+            outline: none;
+            color: $gray-500;
+            cursor: pointer;
+            background: none;
+            font-weight: normal;
+            text-transform: none;
+            text-rendering: auto;
+            box-sizing: border-box;
+            &:hover{
+                transition: $base-fast-transition;
+                color: map-get($colors, danger);
+            }
+        }
+        >.tit {
+            flex: 1;
+            text-align: left;
+            @include ellipsis;
+        }
+    }
+    >.bd {
+        flex: 1;
+        position: relative;
+        overflow: auto;
+        max-height: 100%;  
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    >.ft {
+        text-align: right;
+    }
+}

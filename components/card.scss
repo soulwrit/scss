@@ -1,0 +1,44 @@
+@import "../config";
+@import "../function";
+
+// 面板类样式
+// 面板要求在所处的环境中突显出来，此处只是建立面板的概念 
+$card-min-height: 8em;
+
+@include when ($classname-card){
+  position: relative;
+  min-height: $card-min-height;
+  background-color: $white;
+  @include transition(border); 
+
+  &.border {
+    border: $base-border;
+  }
+
+  &>.hd {
+    display: flex;
+    border-bottom: $base-border;
+    @include clearfix;
+    &>.tit {
+      display: inline-block; 
+      flex: 1;
+      @include ellipsis;
+    }
+    &>.ext {
+      float: right;
+      margin-left: auto; 
+      font-weight: normal;
+    }
+  }
+
+  &>.bd { 
+    position: relative;
+    overflow: auto;
+  } 
+
+  &>.ft {
+    margin: 0; 
+    outline: 0;
+    border-top: $base-border;
+  }
+}

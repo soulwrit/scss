@@ -1,0 +1,12 @@
+@charset "UTF8";
+@import "../config";
+@import "../function";
+
+@each $key, $value in $form-controls-colors {
+    .#{$key} { 
+        border-color: $value;
+        &:hover {
+            box-shadow: 1px 1px 6px $value;
+        } 
+    }
+}

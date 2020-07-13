@@ -1,0 +1,23 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-txt) { 
+  font-weight: normal; 
+  line-height: inherit;
+  word-break: break-all;
+  
+  @each $key, $value in $colors {
+    &.#{$key}{
+      color: $value;
+      @if $key == light or $key == muted {
+        &:hover {
+          color: darken($value, $type-color-amount);
+        }
+      }@else {
+        &:hover {
+          color: lighten($value, $type-color-amount);
+        }
+      }
+    }
+  }
+}

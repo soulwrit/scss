@@ -1,0 +1,30 @@
+@import "../config";
+@import "../function";
+//
+// 面板类样式
+//
+//* 面板要求在所处的环境中突显出来，此处只是建立面板的概念
+
+// 类名说明
+//     card ---------------------> 容器
+//** 与 size、theme 搭配使用，就可以获得想要的效果
+
+$card-min-height: 128px;
+
+@include when ($classname-accordion){
+  position: relative;
+  width: 100%;
+  >.i {
+    box-sizing: border-box;
+    >.hd {
+      cursor: pointer;
+      line-height: inherit;
+      &:hover {
+        color: $theme-color;
+      }
+    }
+    >.bd {
+      box-sizing: border-box;
+    }
+  }
+}

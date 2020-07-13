@@ -1,0 +1,138 @@
+@import "../config";
+@import "../function";
+
+$classname-switch: switch;
+
+$switch-def-bgcolor: $gray-200;
+$switch-def-checked-bgcolor: $theme-color;
+$switch-def-width: 84px;
+$switch-def-outer-width: 40px;
+$switch-def-outer-arrow-bgcolor: $white;
+$switch-def-outer-focus-color: $theme-color;
+$switch-def-outer-false-color: $muted-color;
+
+@include when($classname-switch){
+    display: inline-block; 
+    position: relative;
+    user-select: none;
+    vertical-align: middle;
+    &.inner {
+        min-width: 60px;
+        min-height: 20px;
+        width: $switch-def-width;
+        overflow: hidden;
+    }
+    &>.inner {
+        display: inline-block;
+        position: relative;
+        top: 0; 
+        width: $switch-def-width * 1.5;
+        height: 100%;
+        cursor: pointer;
+        background-color: $switch-def-bgcolor;
+        transition: left .4s ease-in-out;
+        @include clearfix;
+        &.checked {
+            left: 0;
+        }
+        &.unchecked {
+            left:-$switch-def-width/2; 
+        }
+        &>.truly, &>.false, &>.hold {
+            position: relative;
+            display: inline-block;
+            box-sizing: border-box;
+            width: $switch-def-width/2;
+            height: 100%;
+            text-align: center;
+            @include ellipsis;
+            @include float-left;
+        }
+        &>.truly, &>.false {
+            background-color: $switch-def-checked-bgcolor;
+            color: $white;
+            text-shadow: 0 -1px 1px rgba($black, 0.8);
+            font-weight: bold;
+        }
+        &>.hold { 
+            height: 100%;
+            content: 'HOLD'; 
+            visibility: hidden;
+        }
+    }
+
+    &.outer {    
+        top: -2px;
+        @include clearfix;
+        cursor: pointer;
+        &.checked {
+            &>.hold {
+                border-color: $switch-def-checked-bgcolor;
+                background-color: $switch-def-checked-bgcolor;
+                &::after {
+                    left: 0;
+                    margin-left: 0;
+                }
+            }
+            &>.truly {
+                color: $switch-def-outer-focus-color;
+            }
+            &>.false {
+                color: $switch-def-outer-false-color;
+            }
+        }
+        &.unchecked {
+            &>.hold {
+                border-color: $switch-def-bgcolor;
+                background-color: $switch-def-bgcolor;
+                &::after {
+                    left: 100%;
+                    margin-left: 3 - $switch-def-outer-width/2;
+                }
+            }
+            &>.truly {
+                color: $switch-def-outer-false-color;
+            }
+            &>.false {
+                color: $switch-def-outer-focus-color;
+            }
+        }
+        &>.hold {
+            position: relative;
+            width: $switch-def-outer-width;
+            height: $switch-def-outer-width/2;
+            margin: 0; 
+            padding: 0;
+            outline: none;
+            border-radius: $switch-def-outer-width/4;
+            border-width: 1px;
+            border-style: solid;
+            transition: border-color .3s, background-color .3s;
+            box-sizing: border-box;
+            @include float-left;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 1px;
+                left: 1px;
+                border-radius: 100%;
+                transition: all .3s;
+                width: $switch-def-outer-width/2 - 4px;
+                height: $switch-def-outer-width/2 - 4px;
+                background-color: $switch-def-outer-arrow-bgcolor;
+            }
+        }
+        &>.truly, &>.false {  
+            transition: color .3s; 
+            font-weight: 500; 
+            @include ellipsis;
+            @include float-left;
+        }
+        &>.truly {
+            margin-right: $base-space/2;
+        }
+        &>.false {
+            margin-left: $base-space/2;
+        }
+    }
+}

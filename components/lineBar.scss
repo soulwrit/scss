@@ -1,0 +1,36 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-lineBar){
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 0;
+    background-color: $theme-color;
+    transition: $base-fast-transition;
+    z-index: 1;
+    box-sizing: border-box;
+    &.rel {
+        position: relative;
+    }
+    &.abs {
+        position: absolute;
+    } 
+    &.ttr{
+        bottom: 0;
+        height: 2px;
+    }
+    &.rtt {
+        top: 0;
+        height: 2px;
+    }
+    &.ltr {
+        right: 0;
+        width: 2px;
+    }
+    &.rtl {
+        left: 0;
+        width: 2px;
+    }
+}

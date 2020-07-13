@@ -1,0 +1,32 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-list){
+    list-style: none;
+    outline: none; 
+    box-sizing: border-box;
+    margin: $base-space 0;
+    padding: 0 $base-space; 
+
+    &> li {
+        $space: $base-space / 2; 
+        outline: none; 
+        padding-bottom: $space;
+        padding-left: $base-space;
+        padding-right: $base-space;
+        transition: $base-transition;
+        &.fst {
+            font-size: 92.5%;
+            border-bottom: $base-border;
+            padding-bottom: $space;
+            margin-bottom: $base-space;
+        }
+        &.lst {
+            font-size: 80%;
+            border-top: $base-border;
+            padding-top: $space;
+            margin-top: $space;
+            margin-bottom: $space;
+        }
+    }
+}

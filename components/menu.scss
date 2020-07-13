@@ -1,0 +1,42 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-menu) {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0; 
+  list-style: none;
+  transition: $base-transition;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum"; 
+  box-shadow: $menu-shadow;
+
+  >.i {
+    cursor: pointer; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+
+    &:hover, &:active, &:visited, &.active { 
+      // color: $white;
+      color: $theme-color;
+    }
+  }
+
+  &.ttr,&.rtt { 
+    >.i {
+      width: 100%;
+      text-align: center; 
+    }
+  }
+
+  &.ltr, &.rtl { 
+    >.i {
+      height: 100%;
+      padding: $menu-item-padding;
+    }
+  }
+}
+ 

@@ -1,0 +1,79 @@
+@import "../config";
+@import "../function";
+
+@mixin table() {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    > thead > tr {
+      background-color: $table-thead-bg-color;
+    }
+
+    > tbody > tr {
+      background-color: $table-tbody-bg-color;
+    }
+
+    tr {
+      transition: $base-slow-transition;
+      border-bottom: $table-border;
+
+      > th,
+      > td {
+        padding: $base-space;
+        transition: $base-slow-transition;
+      }
+
+      > th {
+        font-weight: 500;
+        color: $base-color;
+      }
+
+      > td {
+        font-weight: 400;
+        color: #777777;
+      }
+    }
+
+    // 紧缩的
+    &.tighten {
+      tr > th, tr > td {
+        padding: $base-space / 2;
+      }
+    }
+    
+    // 事件处理
+    &.hover {
+      > tbody > tr:hover {
+        background-color: $table-tbody-fg-color;
+      }
+    }
+
+    // 隔行变色
+    &.striped {
+      > tbody > tr:nth-child(even) {
+        background-color: $table-tbody-striped-bg;
+      }
+    }
+
+    // 显示表格边框
+    &.bordered {
+      border: $table-border;
+      th,
+      td {
+        border: $table-border;
+      }
+    }
+
+    // 固定布局的表格
+    &.fixed {
+      table-layout: fixed;
+    }
+  }
+}
+
+@include when($classname-table) { 
+  position: relative;
+  @include table();
+}

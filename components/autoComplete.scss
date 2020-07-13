@@ -1,0 +1,10 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-autoComplete){
+    position: relative;
+    box-sizing: border-box;
+    input {
+        width: 100%;
+    }
+}

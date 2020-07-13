@@ -1,0 +1,42 @@
+@import "../config";
+@import "../function";
+
+$suffix-def-right: $base-space *4;
+$suffix-def-bottom: $base-space *2;
+$suffix-def-bgcolor: $white;
+$suffix-def-z-index: map-get($z-index, suffix);
+$suffix-def-backtop-arrow-size: .8em;
+
+@include when($classname-suffix){
+    position: fixed;
+    right: $suffix-def-right;
+    bottom: $suffix-def-bottom;
+    z-index: $suffix-def-z-index;
+    box-sizing: border-box;
+    
+    &>.backtop {
+        display: block; 
+        position: relative; 
+        min-width: 3 * $base-space;
+        min-height: 3 * $base-space;  
+        margin-top: $base-space;
+        border: $base-border;
+        cursor: pointer; 
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 1;
+        background-color: $suffix-def-bgcolor;
+        &>.arrow {  
+            display: inline-block;
+            margin-top: $base-space/2;
+            color: $white;
+            content: ''; 
+            box-sizing: border-box;
+            @include triangle(top, $suffix-def-backtop-arrow-size, solid, $theme-color); 
+        }
+        &>.value {
+            display: block;
+            font-size: small;
+        }
+    }
+} 

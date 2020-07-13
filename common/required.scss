@@ -1,0 +1,397 @@
+@charset "UTF8";
+@import "../config";
+@import "../function";
+
+//-----------------------------------------------------
+// reset scss
+// 清零重置
+html {
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: 100%;
+}
+
+// @each $bp in $breakpoint {
+//   @include screen-resp($bp) {
+//     html {
+//       font-size: map-get($root-size, $bp);
+//     }
+//   }
+// }
+
+body {
+    min-width: 320px;
+    font-family: $base-font-family;
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    color: $base-color;
+    background-color: $base-bg-color;
+    margin: 0;
+    padding: 0;
+}
+
+input, select, button {
+    font-size: $base-font-size;
+    line-height: $base-line-height;
+    font-family: $base-font-family;
+}
+
+a {
+    @include super-link; 
+}
+
+b,strong {
+    font-weight: bold;
+}
+
+dfn {
+    font-style: italic;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    font-size: 0.85em;
+}
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+q {
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+fieldset {
+    border: 1px solid #eee;
+    margin: 0 0.2em;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+    border: 0;
+    padding: 0;
+    white-space: normal;
+}
+
+button,select {
+    text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+}
+
+button[disabled],
+input[disabled] {
+    cursor: default;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+[hidden],template {
+    display: none;
+}
+
+@if nth($placeholder, 1) {
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: nth($placeholder, 2);
+    }
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+h1,h2,h3,h4,h5,h6,p,figure,form {
+    margin: 0 0 .5em 0; 
+}
+
+// 站点底部
+footer {
+    margin-top: 2.5em;
+    padding-bottom: 2em;
+}
+
+[readonly] {
+    border-color: transparent!important;
+}
+
+// 颜色配置
+//////////////////////////////////////////
+@each $key, $value in $colors {
+  .color-#{$key} {
+    color: $value;
+    &:hover {
+      color: lighten($value, $type-color-amount);
+      @include transition(color);
+    }
+  }
+  .border-#{$key}{
+      border-color: $value!important;
+      
+      &:hover {
+        box-shadow: 0 0 2px $value;
+        border-color: lighten($value, $type-color-amount);
+        @include transition(border-color);
+      }
+  }
+}
+
+// flex 方向值
+//////////////////////////////////////////
+[dir='ltr'], .ltr {
+    flex-direction: row;  
+}
+[dir='rtl'], .rtl {
+    flex-direction: row-reverse;
+    direction: ltr;
+    unicode-bidi: normal;
+}
+[dir='ttr'],.ttr {
+    flex-direction: column;
+}
+[dir='rtt'], .rtt{
+    flex-direction: column-reverse;
+}
+
+// 公用内边距值
+//////////////////////////////////////////
+@each $key, $value in $size {
+    .#{$key} {
+        padding: $value $value * $golden-ratio;
+    } 
+}
+
+// 标题样式
+//////////////////////////////////////////
+@each $key,$value in $title {
+    @if($key == 'h5' or $key == 'h6'){
+        #{$key}, .#{$key} {
+            text-transform: uppercase;
+        }
+    }
+    #{$key},.#{$key} {
+        font-size: $value;
+        font-weight: map-get($font-weight, 'normal');
+    }
+}
+
+// 工具类
+//////////////////////////////////////////
+// 清除浮动 clear both
+.cb {
+    @include clearfix;
+}
+// 右浮动 float-right
+.fr {
+    @include float-right; 
+}
+// 左浮动 
+.fl {
+    @include float-left; 
+}
+// 行浮动
+.ff {
+    @include float-left; 
+    min-width: 100%;
+}
+// 文本对齐
+.tac {
+    text-align: center;
+}
+// 文本居右
+.tar {
+    text-align: right;
+}
+// 文本两端对齐
+.taj{
+    text-align: justify;
+}
+// 元素隐藏
+.non{
+    display: none!important;
+}
+// 完全隐藏
+.hid{
+    @include hidden;
+}
+// 不可见
+.vhid{
+    @include visually-hidden;
+}
+// 块元素
+.blk{
+    display: block;;
+}
+// 行内块元素
+.inb {
+    display: inline-block;;
+}
+// 行内flex
+.inf { 
+    display: inline-flex; // 行内 flex
+}
+// scroll
+.s {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    @include scrollor(0);
+}
+// scroll-x
+.sx { 
+    max-width: 100%;
+    overflow-x: auto;  
+    @include scrollor-x;
+}
+// scroll-y
+.sy {
+    max-height: 100%; 
+    overflow-y: auto; 
+    @include scrollor-y;
+}
+
+// 文本移除隐藏
+.ellipsis{
+    @include ellipsis;
+}
+// 禁用
+.disabled{
+    @include disabled; 
+}
+// 只读
+.readonly, .readonly * {    
+    cursor: default!important;
+    opacity: 0.85;
+    pointer-events: none;
+    outline: none;
+    border-color: transparent;
+}
+// 必须
+.required {
+    color: $red;
+    font-size: 12px; 
+}
+// 伪造超链接
+.fakelink {
+    @include super-link; 
+    & + & {
+        margin-left: $base-space/2;
+    }
+}
+// 占位元素
+.placeholder {
+    color: nth($placeholder, 2);
+}
+// svg 图标样式 
+.svgico {
+    color: inherit;
+    line-height: inherit; 
+    vertical-align: middle;     
+    position: relative;
+    top: -1px;
+    &.x1 {
+        font-size: 1.5em;
+    }
+    &.x2 {
+        font-size: 2em;
+    }
+    &.x3 {
+        font-size: 2.5em;
+    }
+    &.x4 {
+        font-size: 3em;
+    }
+    &.x5 {
+        font-size: 3.5em;
+    }
+}
+// 行尾换行
+.wrap {
+    @include end-wrap;
+}
+// 行顶换行
+.swrap {
+    @include start-wrap;
+}
+// 淡入淡出
+.fade {
+    opacity: 0;
+    @include transition(opacity, .45s, linear);
+    &.in {
+        opacity: 1;
+    }
+}

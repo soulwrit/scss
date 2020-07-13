@@ -1,0 +1,371 @@
+@charset "UTF-8";
+//--------------------------------------
+$less-ie: false;  // 是否对ie老版本提供支持
+$type-color-amount: 30; // 交互类颜色hover比率
+
+// 类名配置
+$classname-avatar: ava;        // 头像
+$classname-accordion: acc;     // 手风琴
+$classname-autoComplete: aoc;  // 自动补全
+$classname-cover : cov;        // 封面
+$classname-crumb : cmb;        // 面包屑
+$classname-divider: ddr;       // 分割线
+$classname-dropdown: dp;       // 下拉菜单
+$classname-card : car;         // 卡片卡牌
+$classname-box: box;           // box类
+$classname-icon: ico;          // icon 图标
+$classname-row: row;           // box行
+$classname-reicon: reico;      // 富文本编辑的图标
+$classname-col: col;           // box列
+$classname-editable: dipt;     // 可编辑区域
+$classname-elegantEditor: eed; // elegant Editor 编辑器
+$classname-flex: fx;           // flex类
+$classname-form: fom;          // 表单
+$classname-highSelect: hslt;   // 高阶下拉输入框
+$classname-input: ipt;         // 输入框
+$classname-button: btn;        // 按钮
+$classname-checkbox: chk;      // 复选框
+$classname-select: slt;        // 下拉框
+$classname-suffix: suf;        // 固钉
+$classname-radio: rdo;         // 单选框
+$classname-grid: g;            // 格子
+$classname-list: ls;           // 列表 
+$classname-lineBar: lbar;      // 线性工具条
+$classname-loading: lod;       // loading过载器
+$classname-menu: meu;          // 菜单
+$classname-mask : msk;         // 遮罩层
+$classname-modal: mdl;         // 模态框
+$classname-pager: pag;         // 分页
+$classname-progressBar: pgs;   // 进度条
+$classname-tab: tab;           // 标签页，选项卡
+$classname-table: tbe;         // 表格
+$classname-tag: tag;           // 标签
+$classname-txt: txt;           // 文本
+$classname-toolbar: tbar;      // 工具栏
+$classname-tooltip: ttip;      // 工具提示条
+$classname-toast: tat;         // 提示性浮层工具
+$classname-upload: upd;        // 文件上传
+
+//--------------------------------------
+// 常用功能加载开关
+$load-print: true !default; // 是否加在打印样式 
+
+//-------------------------------------- 
+// 常用媒体查询
+// 媒体视口宽度界点：[min]~[max]构成一个视口区间
+$breakpoint: (xs sm md lg xl vl) !default;
+$breakpoint-xs: 575px;
+$breakpoint-sm: 576px 767px;
+$breakpoint-md: 768px 991px;
+$breakpoint-lg: 992px 1199px;
+$breakpoint-xl: 1200px 1599px;
+$breakpoint-vl: 1600px;
+
+// 颜色配置
+//--------------------------------------
+// 使用简述：
+// lighten ($color, $amount)
+// darken  ($color, $amount)
+// opacify ($color, $amount)
+// mix($color1, $color2[, $amount])
+
+// 灰度过渡
+$white:    #ffffff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000000 !default;
+// 基本颜色
+$blue:  #007bff !default;
+$indigo:#6610f2 !default;
+$purple:#6f42c1 !default;
+$pink:  #e83e8c !default;
+$red:   #dc3545 !default;
+$orange:#fd7e14 !default;
+$yellow:#ffc107 !default;
+$green: #28a745 !default;
+$teal:  #20c997 !default;
+$cyan:  #17a2b8 !default;
+$gray:      $gray-600 !default;
+$gray-dark: $gray-800 !default;
+// 灰色体系
+$grays: (
+  100: $gray-100,
+  200: $gray-200,
+  300: $gray-300,
+  400: $gray-400,
+  500: $gray-500,
+  600: $gray-600,
+  700: $gray-700,
+  800: $gray-800,
+  900: $gray-900
+) !default;
+// 交互状态配色: 主要，成功，信息，警告，错误，危险，轻柔，暗黑
+$colors: (
+  primary:   $blue,
+  success:   $green,
+  info:      $cyan,
+  warning:   $yellow,
+  error:     $red,
+  danger:    darken($red, 10%),
+  light:     $gray-100, 
+  muted:     #888,
+  dark:      $gray-800
+) !default;
+
+// 字体名称
+$font-family:(
+  base: '"Helvetica Neue", Helvetica, Tahoma, sans-serif', // 基础默认
+  SimSun: "SimSun",         // 宋体
+  SimHei: "SimHei",         //黑体
+  Yahei:  "Microsoft Yahei" //微软雅黑
+)!default;
+
+// 文字粗细
+$font-weight:(
+  normal: 400, // 标准
+  faint:  500, // 略粗
+  slight: 600, // 微粗
+  bold:   700, // 粗体
+  bolder: 900  // 老粗
+);
+
+// root字体字号
+$root-size:(
+  xs: 32px, // ----
+  sm: 28px, // 小屏
+  md: 22px, // 中等
+  lg: 14px, // 大屏
+  xl: 15px, // ---
+  vl: 16px, // 超大
+);
+
+// body字体字号 默认root字号的百分比
+// [75, 81.25, 87.5, 93.75, 100]
+$font-size:(
+  xs: 100%  ,  // 0
+  sm: 75%   ,  // 小号
+  md: 81.25% , // 基础
+  lg: 87.5% ,  // 中等
+  xl: 93.75%,  // 大号
+  vl: 112.5% , // 巨大
+);
+
+// 文字行高
+$line-height:(
+  xs: 1  , // 0
+  sm: 1.35, // 小号
+  md: 1.5, // 基础
+  lg: 1.8, // 中等
+  xl: 2.1, // 大号
+  vl: 2.4, // 巨大
+);
+
+// 元素的内外边距定义
+$size: (
+  xs: 0.4em,
+  sm: 0.5em,
+  md: 0.6em,
+  lg: 0.7em,
+  xl: 0.8em,
+  vl: 0.9em,
+) !default;
+
+// 标题字号
+$title: (
+  h1: 2.4em,
+  h2: 2.1em,
+  h3: 1.8em,
+  h4: 1.5em,
+  h5: 1.2em,
+  h6: 1em
+);
+
+//--------------------------------------
+// z-index 管理
+// 元素默认不会出现层叠水平
+// 此处的定义只是开发管理的形式上定义，在webpack对css进行处理的时候，还会给其进行优化
+// ******************** 根据开发顺序添加
+// 位于具有层叠水平的元素，启用默认的z-index继承
+// 直接在位于body中层叠元素需要z-index的约束
+$z-index: (
+  dropdown: 100,  // 下拉菜单
+  modal: 300,     // 弹出层
+  suffix: 800,// 固钉
+  toast: 900,     // 提示框
+  tooltip: 1000,  // 工具提示
+)!default;
+
+//--------------------------------------
+// 栅格的配置
+$golden-ratio: 1.618 !default; // 黄金分割比值
+
+// 基础配置  
+$base-font-family: map-get($font-family, 'yaHei'); // 基础的字体
+$base-font-size: map-get($font-size, md); // 基础字号
+$base-line-height: map-get($line-height, md); // 基础行高
+$base-color: $gray-800; // 基础文本色
+$theme-color: map-get($colors, primary); // 主题色
+$muted-color: map-get($colors, muted); // 柔和色
+$color-interval: 8%; // 反色比率
+$link-color: $theme-color;  // 超链接颜色
+$link-color-hover: darken($link-color, 15%); // 超链接悬停色 darken 15%
+$placeholder: true $gray-300; // placeholder 变量分别为：是否输出表单的占位符placeholder样式，文本色
+$base-bg-color: $white; // body的背景色与文本的颜色
+$base-fast-transition: all 200ms ease;// 过度
+$base-transition: all 400ms ease;
+$base-slow-transition: all 600ms ease;
+$base-border: 1px solid $gray-200;// 边框
+$base-space:  1em; // 基础的距离
+$base-shadow: 0 0 3px $gray-200;
+
+// 滚动条样式的配置
+//-- 针对chrome而言，如果需要做兼容，那么请自行添加
+//-- 滚动条的相关配置使用 绝对单位：px，意思是在所有设备下保持一致
+
+//-- 滚动条的组成
+/***
+    ::-webkit-scrollbar 滚动条整体部分
+    ::-webkit-scrollbar-thumb  滚动条里面的小方块，能向上向下移动（或往左往右移动，取决于是垂直滚动条还是水平滚动条）
+    ::-webkit-scrollbar-track  滚动条的轨道（里面装有Thumb）
+    ::-webkit-scrollbar-button 滚动条的轨道的两端按钮，允许通过点击微调小方块的位置。
+    ::-webkit-scrollbar-track-piece 内层轨道，滚动条中间部分（除去）
+    ::-webkit-scrollbar-corner 边角，即两个滚动条的交汇处
+    ::-webkit-resizer 两个滚动条的交汇处上用于通过拖动调整元素大小的小控件
+ ***/
+// 默认宽度 
+$scrollor-size: 8px;
+// 默认的配置
+$scrollor-base:(
+    // 小方块
+    scrollbar-thumb:(
+      //border-radius: 4px,                                 // 默认提供半个圆角
+      background-color: rgb(193, 193, 193),               // 滑块
+      box-shadow:  0 0 3px 2px rgba(255,255,255,0.8),     // 内阴影
+    ),
+    // 轨道
+    scrollbar-track:(
+
+    ),
+    // 内层轨道
+    scrollbar-track-piece:(
+      
+    ),
+    // 两端按钮
+    scrollbar-button:(
+
+    ),
+    // 边角
+    scrollbar-corner:(
+
+    ),
+    // 小控件
+    resizer:(
+
+    )
+);
+$scrollor-y: (
+    scrollbar: (
+        width: $scrollor-size,       // 滚动条的宽度
+        background-color: $gray-300  // 滚动条默认透明
+    )
+);
+$scrollor-x: (
+    scrollbar: (
+        height: $scrollor-size,       // 滚动条的宽度
+        background-color: $gray-300,  // 滚动条默认透明
+    )
+);
+
+//--------------------------------------------------
+// 头像配置
+$avatar-size: (
+  1x: 18px 18px,
+  2x: 24px 24px,
+  xs: 32px 32px,
+  sm: 48px 48px,
+  md: 64px 64px,
+  lg: 80px 80px,
+  xl: 96px 96px,
+  vl: 108px 108px
+);
+
+// 菜单项
+$menu-bg-color: $white;
+$menu-shadow: inset 0 0 10px rgba($white, 0.15);
+$menu-item-bg-color: $white;
+$menu-item-height: 2em;
+$menu-item-padding: 0 1em;
+$menu-theme: (
+  primary:   $blue,
+  success:   $green,
+  info:      $cyan,
+  warning:   $yellow,
+  danger:    darken($red, 10%),
+  light:     $gray-100, 
+  dark:      $gray-800
+) !default;
+
+// 表格
+$table-thead-bg-color: #fafafa;   // 表头中 tr 的背景色
+$table-tbody-bg-color: $white;      // 表格体中 tr 的背景色
+$table-tbody-fg-color: #fdfdfd;   // 表格体中 tr 的 hover 色
+$table-tbody-striped-bg: #fbfbfb; // 表格体中 tr 的 hover 色
+$table-border: 1px solid #e8e8e8;
+
+// form 控件的外表
+$form-controls-colors:(
+  primary:   $blue,
+  success:   $green,
+  info:      $cyan,
+  warning:   $yellow,
+  error:     $red,
+  danger:    darken($red, 10%),
+  light:     $gray-100,
+  muted:     #ccc, 
+  dark:      $gray-800
+);
+
+// toast 组件
+$toast-colors: (
+  primary:   $blue,
+  success:   $green,
+  info:      $cyan,
+  warning:   $yellow,
+  error:     $red,
+  danger:    darken($red, 10%),
+  light:     $gray-100, 
+  dark:      $gray-800
+);
+
+// tooptips 组件
+$tooltip-colors: (
+  primary:   $blue,
+  success:   $green,
+  info:      $cyan,
+  warning:   $yellow,
+  error:     $red,
+  danger:    darken($red, 10%),
+  light:     $gray-100, 
+  dark:      $gray-800
+);
+
+// icon 组件
+$icon-name: rico;
+$icon-font-path: "./font";
+$icon-font-size-base: 14px;
+$icon-line-height-base: 1; 
+$icon-border-color: #eee;  
+$icon-size: (
+  1x: .8em,
+  2x: 1.2em,
+  3x: 1.6em,
+  4x: 2em,
+  5x: 2.4em
+);

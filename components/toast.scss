@@ -1,0 +1,182 @@
+@import "../config";
+@import "../function";
+
+$toast-common-space: 2em;
+
+$toast-position: (
+    top-start: (
+        start: (
+            left: $toast-common-space, 
+            top: $toast-common-space,
+        ),
+        open: ( 
+            left: 0, 
+        ),
+        close: (
+            left: -100%,
+            transition: left .8s ease-in-out
+        )
+    ),
+    top: (
+        start: (
+            top: $toast-common-space,
+            left: 50%,
+            transform: translateX(-50%), 
+        ),
+        open: (
+           opacity: 1, 
+        ),
+        close: (
+            opacity: 0, 
+            transition: opacity .8s ease-in-out
+        )
+    ),
+    top-end: ( 
+        start: (
+            top: $toast-common-space,
+            right: $toast-common-space,  
+        ),
+        open: ( 
+            right: 0,
+        ),
+        close: (
+            right: -100%,
+            transition: right .8s ease-in-out
+        )
+    ),
+    bottom-start: (
+        start: (
+            bottom: $toast-common-space,
+            left: $toast-common-space,  
+        ),
+        open: (
+            left: 0,
+        ),
+        close: (
+            left: -100%,
+            transition: left .8s ease-in-out
+        )
+    ),
+    bottom: (
+        start: (
+            bottom: $toast-common-space,
+            left: 50%,
+            transform: translateX(-50%), 
+        ),
+        open: (
+            opacity: 1, 
+        ),
+        close: (
+            opacity: 0, 
+            transition: opacity .8s ease-in-out
+        )
+    ),
+    bottom-end: (
+        start: (
+            right: $toast-common-space,
+            bottom: $toast-common-space, 
+        ),
+        open: ( 
+            right: 0,
+        ),
+        close: (
+            right: -100%,
+            transition: right .8s ease-in-out
+        ),
+    ),
+    // right: (
+    //     open: (
+    //         left: $toast-common-space
+    //     ),
+    //     close: (
+    //         left: -100%,
+    //         top: 50%,    
+    //         transform: translateY(-50%),
+    //         transition: left .8s ease-in-out
+    //     ),
+    // ),
+    // left: (
+    //     open: (
+    //         left: $toast-common-space
+    //     ),
+    //     close: (
+    //         left: -100%,
+    //         top: 50%,    
+    //         transform: translateY(-50%),
+    //         transition: left .8s ease-in-out
+    //     ),
+    // ),
+    // middle: (
+    //     open: (
+    //         top: 50%,
+    //     ),
+    //     close: (
+    //         top: 0%, 
+    //         left: 50%, 
+    //         transform: translate(-50%, -50%),
+    //         transition: top 0.2s ease-in-out
+    //     ),
+    // ),
+    // fade: (
+    //     open: (
+    //         opacity: 1,
+    //     ),
+    //     close: (
+    //         top: 50%, 
+    //         left: 50%, 
+    //         opacity: 0,
+    //         transform: translate(-50%, -50%),
+    //         transition: opacity 0.2s ease-in-out
+    //     ),
+    // ),
+);
+
+@include when($classname-toast) {
+  position: fixed; 
+  z-index: map-get($z-index, toast);
+  background-image: none;
+  background-color: transparent;
+  box-sizing: border-box;
+  transition: all .4s ease-in;
+
+  @each $key, $map in $toast-position {
+    &.#{$key} {
+      $start: map-get($map, start);
+      $close: map-get($map, close);
+      $open: map-get($map, open);
+      @each $prop, $value in $start {
+        #{$prop}: $value;
+      }
+    
+      &>.wrap {
+          @each $prop, $value in $close {
+            #{$prop}: $value;
+         } 
+         &.open {
+            @each $prop, $value in $open {
+                #{$prop}: $value;
+            }
+         }
+      }
+    }
+  }
+
+  &>.wrap {
+      position: relative;  
+      min-width: 10em;
+      max-width: 30em;
+      margin-bottom: $base-space*1.5;
+      @each $key, $value in $toast-colors {
+          &.#{$key} { 
+              border-color: $value;
+              @if $key == light or $key == secondary or $key == muted {
+                  color: initial;
+                  background-color: $white;
+              }@else {
+                  color: $white;
+                  background-color: $value;
+              }
+          }
+      }
+   }
+}

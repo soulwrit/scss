@@ -1,0 +1,53 @@
+@import "../config";
+@import "../function";
+ 
+@include when ($classname-upload){ 
+    // 触发点
+    &.point { 
+        pointer-events: unset;
+        visibility: visible;
+        display: inline-block; 
+    }
+    // 文件列表
+    &.list { 
+        padding: $base-space 0;
+        &>.i {
+            display: flex;
+            margin-bottom: $base-space;
+            line-height: 1.75;
+            border: $base-border;
+            flex-wrap: wrap;
+            // @include clearfix;
+           &>.name { 
+               //    float: left;
+               //    padding-right: $base-space;
+               overflow: hidden;
+               max-width: 100%;
+               text-overflow: ellipsis;
+               white-space: nowrap;
+               box-sizing: border-box;
+               flex: 1;
+            //    width: calc(100% - #{$action-width} - 60px);
+               &>.size{
+                  font-size: 50%;
+                  color: $muted-color;
+                  margin-left: $base-space/2;
+               }
+               &>.text{
+                   margin-left: $base-space/2; 
+                   font-size: 80%;
+               }
+           }
+           &>.status {
+            //  float: left;
+            //  width: 60px;
+                padding-right: $base-space;
+           }
+           &>.action {
+               text-align: left; 
+            //    float: left;
+            //    width: $action-width;
+           }
+       }
+    }
+}

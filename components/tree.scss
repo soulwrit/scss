@@ -1,0 +1,19 @@
+@import "../config";
+@import "../function";
+
+@include when (tree){
+    position: relative;
+    & > &{
+        padding-left: $base-space;
+        border-left: 1px dotted $theme-color;
+    }
+    .tit {
+        cursor: pointer;
+        line-height: 1.75;
+        background-origin: padding-box;
+        &.active {
+            background-color: opacify($theme-color,0.95);
+            color: $white;
+        }
+    }
+}

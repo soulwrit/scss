@@ -1,0 +1,16 @@
+{
+  "name": "@writ/scss",
+  "version": "1.0.0",
+  "description": "my scss lib",
+  "keywords": [
+    "scss",
+    "css",
+    "style",
+    "css3",
+    "sass",
+    "lib",
+    "css utils"
+  ],
+  "author": "",
+  "license": "ISC"
+}

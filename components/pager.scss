@@ -1,0 +1,98 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-pager){
+  position: relative; 
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: $base-space 0;
+
+  &>ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0; 
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: $base-line-height;
+    list-style: none;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+    box-sizing: border-box;
+  
+    &>.i {
+      display: inline-block;
+      min-width: 32px;
+      height: 32px;
+      line-height: 30px;
+      margin-right: 8px;
+      font-family: Arial;
+      cursor: pointer;
+      outline: 0;
+      color: $base-color;
+      list-style: none;
+      vertical-align: middle;
+      background-color: $white;
+      text-align: center;
+      border: 1px solid #d9d9d9;
+      user-select: none;
+      transition: $base-fast-transition;
+      &:hover {
+        color: $theme-color;
+      }
+      &.disabled {
+        background: #f5f5f5;
+        border-color: #d9d9d9;
+        pointer-events: none;
+        opacity: 0.8; 
+      }
+      &.active {
+        background: $theme-color;
+        border-color: $theme-color; 
+        pointer-events: none;
+        color: $white;
+      }
+    }
+  
+    &>.prev,
+    &>.next {
+      height: 32px;
+      line-height: 32px;
+      color: #d9d9d9;
+      font-size: 14px;
+    }
+  }
+}
+
+// 
+// 分页插件
+// -------
+// 说明：
+// -----------------------------------------
+//      容器类名  pager
+//      页码     pager-item
+//      连接     pager-link  
+
+ol.pager,
+ul.pager{
+    @extend %list-unstyled;
+}
+.pager{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    margin: auto;
+    .pager-item{
+        flex: 0 0 auto;
+        border:1px solid #ddd;
+        &:not(:first-child){
+            border-left:0;
+        }
+        .pager-link{
+            display: block;
+            &.active{
+                opacity: 0.8;
+            }
+        }
+    }
+}

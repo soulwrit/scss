@@ -1,0 +1,70 @@
+@charset "UTF-8";
+//-----------------------------------------------------
+// font-face scss
+//-----------------------------------------------------
+
+// 导入变量
+@import "config";
+
+// 申明 @font-face
+@font-face {
+    font-family: $face-family;
+    src: url('#{$font-file-path}fa.eot') format('embedded-opentype'),
+         url('#{$font-file-path}fa.woff') format('woff'),
+         url('#{$font-file-path}fa.ttf') format('truetype'),
+         url('#{$font-file-path}fa.svg') format('svg');
+}
+
+// 传入单个名字，以在所有的$ClassAll变量中查询到其对应的内容
+// 如glass，查询到的就是"\f000"，music对应的就是"\f001"
+@function font-search($needle, $sea: $face-class-all){
+    @each $item in $sea {
+        $index: index($item, $needle);
+        @if $index {
+            $return: if($index == 1, 2, $index);
+            @return nth($item,$return);
+        }
+    }
+    @warn "#{$needle} 不存在!";
+    @return false;
+}
+
+
+// icon mixin
+@mixin font-icon($class){
+	&.#{$face-class-common}-#{$class}{
+		&:before{
+			content: font-search($class);
+		}
+	}
+}
+
+// 基础样式
+@if $face-class-common {
+    .#{$face-class-common}{
+        display: inline-block;
+        font-family: $face-family;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+
+        // 全部输出
+        @if $face-class-switch == true {
+            @each $class in $face-class-all {
+                // @debug '#{$class}';
+                $name:     nth($class,1);
+                $content:  nth($class,2);
+                @include font-icon($name);
+            }
+        } @else {
+            // 部分输出的 class
+            @if length($face-class-output) >= 2{
+                @each $class in $face-class-output{
+                    @include font-icon($class);
+                }
+            }
+        }
+    }
+}

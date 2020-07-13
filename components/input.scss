@@ -1,0 +1,39 @@
+@import "../config";
+@import "../function";
+
+@include when($classname-input){
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  outline: none; 
+  line-height: 1;
+  box-shadow: none;
+  font-weight: normal;
+  user-select: none; 
+  box-sizing: border-box;
+  @include transition(border-color);
+  @include clearfix;
+
+  @each $key, $value in $form-controls-colors {
+    &.#{$key} { 
+      border-color: $value;
+      &:hover {
+        box-shadow: 1px 1px 6px $value;
+      }
+    }
+  }
+  @at-root textarea.#{$classname-input}{
+    line-height: initial;
+    resize: vertical;
+  }
+  &>input  {
+    vertical-align: middle;
+    border: none;
+    outline: 0;
+    resize: none;
+    line-height: initial;
+    overflow: hidden;
+  } 
+}

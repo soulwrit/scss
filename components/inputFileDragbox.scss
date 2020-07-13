@@ -1,0 +1,23 @@
+@import "../config";
+@import "../function";
+@import "./inputFileList.scss";
+ 
+@include when ($classname-upload){
+    // 触发点
+    &.inbox { 
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: space-evenly;
+        min-height: 80px;
+        text-align: center;
+        pointer-events: unset;
+        visibility: visible;
+        border: $base-border;
+        cursor: move;
+        &:hover {
+            border-style: dashed;
+            border-color: $theme-color;
+        }
+    } 
+}

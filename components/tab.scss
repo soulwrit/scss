@@ -1,0 +1,111 @@
+@import "../config";
+@import "../function";
+// 样式对应的DOM结构
+/*
+    <div class='tab'>
+        <div class='pane'>
+            <div class='act'>
+                <div class='i'></div>
+            </div>
+            <div class='ext'></div>
+        </div>
+        <div class='cnt'>
+            <div class='i'></div>
+        </div>
+    </div>
+*/
+
+/* 基本选项卡样式 */ 
+$tab-border: 1px solid $theme-color; // tab默认使用的边框样式
+$tab-pane-bgcolor: $white; // 选项卡条的背景颜色
+$tab-active-color: $theme-color; // 选项卡选中时的字体颜色
+$tab-item-padding: 0 1em;
+$tab-item-vertical-padding: 1em .5em;
+$tab-content-padding: 1em;
+
+@include when ($classname-tab){
+    display: flex;
+    height: 100%; 
+    justify-content: space-between; 
+    box-sizing: border-box;
+
+    // 控制杆
+    >.pane {  
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        background-color: $tab-pane-bgcolor;
+        box-sizing: border-box;
+        // 控制杆的 item
+        >.action {
+            flex: 1;
+            >.i {
+                position: relative;
+                cursor: pointer;
+                @include ellipsis(true, auto);
+                &.active { 
+                    color: $tab-active-color;
+                }
+            }
+        }
+        >.extra {}
+    }
+
+    // 内容
+    >.cnt {
+        position: relative;
+        overflow: auto;
+        flex: 1;
+        // 内容块
+        >.i {
+            overflow: auto;
+            display: none;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            &.active{
+                display: block;
+            }
+        }
+    }
+
+    // 水平类型的选项卡
+    @at-root &.horizontal{
+        flex-direction: column;  
+        >.pane {
+            width: 100%; 
+            >.action { 
+                overflow-x: auto;
+                overflow-y: hidden;
+                >.i{
+                    min-width: 3em;
+                    text-align: center;
+                }
+            }
+        }
+        >.cnt {
+            width: 100%;
+        }
+    }
+    
+    // 垂直类型的选项卡
+    @at-root &.vertical {
+        flex-direction: row; 
+        >.pane {
+            min-width: 3em;  
+            height: 100%;
+            flex-direction: column;
+            border-right: $base-border;
+            >.action {
+                overflow-x: hidden;
+                overflow-y: auto; 
+            }
+            >.extra {
+                border-top: $base-border; 
+            }
+        }
+        >.cnt {
+            max-height: 100%; 
+        }
+    }
+}

@@ -1,0 +1,45 @@
+@import "../config";
+@import "../function";
+@include when ($classname-button){
+  outline: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-weight: normal; 
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  cursor: pointer;
+  line-height: 1;
+  box-sizing: border-box;
+  text-overflow: ellipsis; 
+  @if $less-ie{
+    //解决ie67双倍padding
+    *overflow: visible;
+  }
+  & + & {
+    margin-left: $base-space;
+  }
+  
+  @each $key, $value in $form-controls-colors {
+    &.#{$key} { 
+      border-color: $value;
+      @if $key == light or $key == muted {
+        color: inherit;
+        background-color: $white;
+      }@else {
+        color: $white;
+        background-color: $value;
+      } 
+    }
+  }
+  &.link {
+    padding: 0; 
+    border-color: transparent;
+    background-color: transparent;   
+    @include  super-link;
+  }
+  &:hover {
+    transition: opactity .3s linear;
+    opacity: 0.8;
+  }
+}
